@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  @font-face {
+    font-family: "eczar";
+    src: url("../public/fonts/Eczar.ttf") format("truetype") or ttf;
+  }
+  @font-face {
+    font-family: "roboto-condensed";
+    src: url("../public//fonts/RobotoCondensed.ttf") format("truetype") or ttf;
+  }
+}
+
+
