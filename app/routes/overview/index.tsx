@@ -3,8 +3,22 @@ import { PriceChart } from '~/components/pricechart';
 import { Chart } from 'chart.js';
 import { useLoaderData } from '@remix-run/react';
 export const loader = async () => {
-	const res = await fetch('https://api.coincap.io/v2/assets/?limit=5');
+	// e5716fd6-e217-4109-aaa7-a5113b251bf8
+
+	const res = await fetch('https://api.coinstats.app/public/v1/coins?skip=0&limit=5&currency=USD');
 	const data = await res.json();
+	const coinIds = data.coins.map((coinObj: any) => coinObj.id);
+	const priceRequests = coinIds.map(async (coinId: 'string') => {
+		console.log(coinId);
+		return await fetch(`https://api.coinstats.app/public/v1/charts?period=1m&coinId=${coinId}`);
+	});
+	const priceResults = await Promise.all(priceRequests);
+	const array = [];
+	priceResults.map(async (o) => console.log(await o.json(), '~~~~~~~~~~~~~~~~~~~~~~~~~~\n'));
+	//	const coinIds = data?.coins.map((coinInfo: any) => {
+	//coinInfo?.id
+	//})
+	//	console.log(coinIds)
 	const chartData = {
 		labels: data.data.map((crypto: any) => crypto.name),
 		datasets: [
